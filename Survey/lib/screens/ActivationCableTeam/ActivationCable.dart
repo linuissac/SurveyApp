@@ -7,14 +7,14 @@ import 'package:flutter/services.dart';
 import 'package:SurveyApp/components/CustomTextField.dart';
 import 'package:signature/signature.dart';
 
-class CivilTeam extends StatefulWidget {
+class Cable extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new CivilTeamState();
+    return new CableState();
   }
 }
 
-class CivilTeamState extends State<CivilTeam> {
+class CableState extends State<Cable> {
   @override
   DateTime selectedDate = DateTime.now();
 
@@ -80,7 +80,7 @@ class CivilTeamState extends State<CivilTeam> {
 
       return new Scaffold(
         appBar: AppBar(
-          title: Text('Advanced civils Team',
+          title: Text('Activation/Cable Team',
               style: TextStyle(
                 color: Colors.black,
               )),
@@ -182,51 +182,34 @@ class CivilTeamState extends State<CivilTeam> {
                             SizedBox(
                               height: 30,
                             ),
-                            Text("Work Activity"),
+                            Text("Location"),
                             SizedBox(
                               height: 14,
                             ),
-                            InputDecorator(
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Color(0xFFF9F9F9),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10.7),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xFFF9F9F9),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10.7),
-                                ),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  // hint: Text("Select Device"),
-                                  value: currentSelectedValue,
-                                  icon: Icon(Icons.keyboard_arrow_down),
-                                  iconEnabledColor: Colors.yellow[600],
-                                  isDense: true,
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      currentSelectedValue = newValue;
-                                    });
-                                    print(currentSelectedValue);
-                                  },
-                                  items: deviceTypes.map((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
+                            CustomTextField(
+                              cursorColor: Colors.white,
+                              onSaved: (value) => streetName = value,
                             ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Text("Job Comments"),
+                            SizedBox(
+                              height: 14,
+                            ),
+                            Card(
+                                color: Color(0xFFF9F9F9),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: TextField(
+                                    maxLines: 8,
+                                    decoration: InputDecoration.collapsed(
+                                      filled: true,
+                                      fillColor: Color(0xFFF9F9F9),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                )),
                             SizedBox(
                               height: 30,
                             ),
@@ -236,47 +219,7 @@ class CivilTeamState extends State<CivilTeam> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Length"),
-                                    SizedBox(
-                                      height: 14,
-                                    ),
-                                    CustomTextField(
-                                      cursorColor: Colors.white,
-                                      onSaved: (value) => streetName = value,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Width"),
-                                    SizedBox(
-                                      height: 14,
-                                    ),
-                                    CustomTextField(
-                                      cursorColor: Colors.white,
-                                      onSaved: (value) => streetName = value,
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ]),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Row(children: [
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Depth"),
+                                    Text("Quantity Claimed"),
                                     SizedBox(
                                       height: 14,
                                     ),
@@ -393,64 +336,6 @@ class CivilTeamState extends State<CivilTeam> {
                                 ),
                               )
                             ]),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Text("Engineer Signature"),
-                            SizedBox(
-                              height: 14,
-                            ),
-                            //SIGNATURE CANVAS
-                            Signature(
-                              controller: _controller,
-                              height: 120,
-                              backgroundColor: Color(0xFFF9F9F9),
-                            ),
-                            //OK AND CLEAR BUTTONS
-                            Container(
-                              decoration:
-                                  const BoxDecoration(color: Color(0xFFF9F9F9)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  //SHOW EXPORTED IMAGE IN NEW ROUTE
-                                  IconButton(
-                                    icon: const Icon(Icons.check),
-                                    color: Colors.yellow[600],
-                                    onPressed: () async {
-                                      if (_controller.isNotEmpty) {
-                                        var data =
-                                            await _controller.toPngBytes();
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                              return Scaffold(
-                                                appBar: AppBar(),
-                                                body: Center(
-                                                    child: Container(
-                                                        color: Colors.grey[300],
-                                                        child: Image.memory(
-                                                            data))),
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                  //CLEAR CANVAS
-                                  IconButton(
-                                    icon: const Icon(Icons.clear),
-                                    color: Colors.yellow[600],
-                                    onPressed: () {
-                                      setState(() => _controller.clear());
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
                             SizedBox(
                               height: 30,
                             ),
