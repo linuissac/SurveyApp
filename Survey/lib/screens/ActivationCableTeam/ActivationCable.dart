@@ -137,23 +137,20 @@ class CableState extends State<Cable> {
                                         width: 10,
                                       ),
                                       Text("Contract name / Number"),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 90),
-                                        child: GestureDetector(
-                                          onTap: () => {},
-                                          child: Container(
-                                            width: 60,
-                                            height: 80,
-                                            decoration: BoxDecoration(
-                                              color: Colors.black,
-                                              borderRadius:
-                                                  BorderRadius.circular(7),
-                                            ),
-                                            child: Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: Colors.yellow[600],
-                                            ),
+                                      Spacer(),
+                                      GestureDetector(
+                                        onTap: () => {},
+                                        child: Container(
+                                          width: 60,
+                                          height: 80,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(7),
+                                          ),
+                                          child: Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: Colors.yellow[600],
                                           ),
                                         ),
                                       ),
