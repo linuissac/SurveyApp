@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(left: 20,top: height*0.05),
+                        padding: EdgeInsets.only(left: 20, top: height * 0.05),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen>
                       //   height: 25,
                       // ),
                       Padding(
-                        padding: EdgeInsets.only(right: 12,top: 10),
+                        padding: EdgeInsets.only(right: 12, top: 10),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -186,9 +186,7 @@ class _LoginScreenState extends State<LoginScreen>
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: height*0.075,
-                  ),
+                  Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -203,7 +201,9 @@ class _LoginScreenState extends State<LoginScreen>
                       OnBoardingButton()
                     ],
                   ),
-                  
+                  SizedBox(
+                    height: height * 0.055,
+                  ),
                 ]),
               )
             ],
@@ -219,10 +219,10 @@ class OnBoardingButton extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return new GestureDetector(
       onTap: () => {
-       // Navigator.push(
-          //context,
-         // MaterialPageRoute(builder: (context) => HomeScreen()),
-       // ),
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        ),
       },
       child: Container(
           width: 85,
