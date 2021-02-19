@@ -33,6 +33,7 @@ dependencies:
   signature: ^3.2.0
   image_picker: 0.4.12+1
   dotted_border: ^1.0.7
+  image_size_getter: ^0.2.1
 
 dev_dependencies:
   flutter_test:
@@ -60,7 +61,14 @@ flutter:
     - assets/images/login_lower_bg.png
     - assets/images/login_upper_bg.png
     - assets/images/logo.png
+    - assets/images/login.png
+    - assets/images/header_logo.png
+    - assets/images/cable.png
+    - assets/images/civil.png
+    - assets/images/trenching.png
     - assets/icons/curve.png
+    - assets/icons/2.0x/curve.png
+    - assets/icons/3.0x/curve.png
 
  
   # To add assets to your application, add an assets section, like this:

@@ -8,6 +8,8 @@ import 'package:Survey/screens/ActivationCableTeam/ActivationCable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:image_size_getter/image_size_getter.dart';
+import 'package:image_size_getter/file_input.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,7 +22,6 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   int segmentedControlGroupValue = 0;
   GlobalKey<FormState> _trenchingKey = new GlobalKey();
-  File _image;
   final picker = ImagePicker();
 
   final Map<int, Widget> myTabs = <int, Widget>{
@@ -33,6 +34,9 @@ class HomeScreenState extends State<HomeScreen> {
       child: Text("Defect Logs"),
     ),
   };
+
+  final List<UploadImages> uploadImgesArr = List<UploadImages>();
+
   DateTime selectedDate = DateTime.now();
   bool timeSheet = true;
 
@@ -52,6 +56,14 @@ class HomeScreenState extends State<HomeScreen> {
     File image = await ImagePicker.pickImage(
       source: ImageSource.camera,
     );
+        String fileName = image.path.split('/').last;
+    setState(() {
+    this.uploadImgesArr.add(UploadImages(title: fileName,size: '1.2 Mb',imageFile: image.toString(),imageUrl: File(image.path))); 
+    });
+    print(fileName);
+
+    String type = fileName.split('.').last;
+    print(type);
   }
 
   _imgFromGallery() async {
@@ -59,11 +71,10 @@ class HomeScreenState extends State<HomeScreen> {
     File image = await ImagePicker.pickImage(
       source: ImageSource.gallery,
     );
-
     String fileName = image.path.split('/').last;
+    final size = ImageSizeGetter.getSize(FileInput(image));
     setState(() {
-      image:
-      fileName;
+    this.uploadImgesArr.add(UploadImages(title: fileName,size: size.toString(),imageFile: image.toString(),imageUrl: File(image.path))); 
     });
     print(fileName);
 
@@ -102,8 +113,6 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return new Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -130,7 +139,7 @@ class HomeScreenState extends State<HomeScreen> {
                     color: Colors.black,
                     fontFamily: 'Proxima',
                     fontSize: 16,
-                    fontWeight: FontWeight.normal,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(
@@ -167,290 +176,278 @@ class HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                timeSheet
-                    ? Column(children: [
-                        Card(
-                          semanticContainer: true,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: Stack(children: [
-                            Image(
-                                image:
-                                    AssetImage("assets/images/trenching.png"),
-                                fit: BoxFit.fill,
-                                height: 180),
-                            Positioned(
-                              left: 10,
-                              bottom: 15,
-                              width: 150,
-                              child: Container(
-                                width: 80,
-                                height: 40,
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 10, right: 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Trenching Gang"),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TrenchingScreen()),
-                                          );
-                                        },
-                                        child: new Icon(
-                                          Icons.arrow_forward,
-                                          color: Colors.yellow[700],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                          ]),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          elevation: 5,
-                          margin: EdgeInsets.all(5),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Card(
-                          semanticContainer: true,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: Stack(
-                            children: [
-                              Image(
-                                  image: AssetImage("assets/images/civil.png"),
-                                  fit: BoxFit.fill,
-                                  height: 180),
-                              Positioned(
-                                left: 10,
-                                bottom: 15,
-                                width: 180,
-                                child: Container(
-                                  width: 80,
-                                  height: 40,
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 10, right: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("Advaced Civil Team"),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CivilTeam()),
-                                            );
-                                          },
-                                          child: new Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.yellow[700],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          elevation: 5,
-                          margin: EdgeInsets.all(5),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Card(
-                          semanticContainer: true,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: Stack(
-                            children: [
-                              Image(
-                                  image: AssetImage("assets/images/cable.png"),
-                                  fit: BoxFit.fill,
-                                  height: 180),
-                              Positioned(
-                                left: 10,
-                                bottom: 15,
-                                width: 200,
-                                child: Container(
-                                  width: 80,
-                                  height: 40,
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 10, right: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("Activation/Cable Team"),
-                                        GestureDetector(
-                                          onTap: () {
-                                            // print("Container was tapped");Cable
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Cable()),
-                                            );
-                                          },
-                                          child: new Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.yellow[700],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          elevation: 5,
-                          margin: EdgeInsets.all(5),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ])
-                    : (Form(
-                        key: _trenchingKey,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFF9F9F9),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 12),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.search,
-                                          color: Colors.black,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text("Contract name / Number"),
-                                        Spacer(),
-                                        GestureDetector(
-                                          onTap: () => {},
-                                          child: Container(
-                                            width: 60,
-                                            height: 80,
-                                            decoration: BoxDecoration(
-                                              color: Colors.black,
-                                              borderRadius:
-                                                  BorderRadius.circular(7),
-                                            ),
-                                            child: Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: Colors.yellow[600],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Text("Description"),
-                              SizedBox(
-                                height: 14,
-                              ),
-                              Card(
-                                  color: Color(0xFFF9F9F9),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: TextField(
-                                      maxLines: 6,
-                                      decoration: InputDecoration.collapsed(
-                                        filled: true,
-                                        fillColor: Color(0xFFF9F9F9),
-                                        border: InputBorder.none,
-                                      ),
-                                    ),
-                                  )),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  DottedBorder(
-                                    dashPattern: [8, 4],
-                                    strokeWidth: 0.5,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        _showPicker(context);
-                                      },
-                                      child: Container(
-                                          padding: EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          height: 120,
-                                          width: width,
-                                          color: Colors.white,
-                                          child: new IconButton(
-                                            icon: new Icon(
-                                                Icons.cloud_done_outlined),
-                                          )),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  RaisedButton(
-                                    child: Text(
-                                      "Submit",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    onPressed: () => {},
-                                    color: Colors.yellow[700],
-                                    textColor: Colors.white,
-                                    padding: EdgeInsets.only(
-                                        left: 50,
-                                        right: 50,
-                                        top: 10,
-                                        bottom: 10),
-                                    splashColor: Colors.grey,
-                                  ),
-                                ],
-                              )
-                            ]))),
+                timeSheet ? _timeSheetWidget(context) : _defectstWidget(context)
               ],
             )),
       ),
+    );
+  }
+
+//Time Sheet Widget
+
+  Widget _timeSheetWidget(BuildContext context) {
+    return Column(children: [
+      _timeSheetCard(context, "Trenching Gang", "assets/images/trenching.png"),
+      SizedBox(height: 20),
+      _timeSheetCard(context, "Advaced Civil Team", "assets/images/civil.png"),
+      SizedBox(height: 20),
+      _timeSheetCard(
+          context, "Activation/Cable Team", "assets/images/cable.png"),
+      SizedBox(height: 20),
+    ]);
+  }
+
+  //Defects
+
+  Widget _defectstWidget(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    return Form(
+        key: _trenchingKey,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            height: 50,
+            decoration: BoxDecoration(
+              color: Color(0xFFF9F9F9),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Padding(
+                padding: EdgeInsets.only(left: 12),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("Contract name / Number"),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () => {},
+                      child: Container(
+                        width: 50,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: BorderRadius.circular(7),
+                        ),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.yellow[600],
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Text("Description"),
+          SizedBox(
+            height: 14,
+          ),
+          Container(
+              height: 100,
+              color: Color(0xFFF9F9F9),
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextField(
+                  maxLines: 6,
+                  decoration: InputDecoration.collapsed(
+                    hintText: 'En',
+                    filled: true,
+                    fillColor: Color(0xFFF9F9F9),
+                    border: InputBorder.none,
+                  ),
+                ),
+              )),
+          SizedBox(height: 25),
+          DottedBorder(
+            color: Colors.grey[400],
+            dashPattern: [8, 4],
+            strokeWidth: 0.5,
+            child: Container(
+                height: 100,
+                width: width,
+                color: Color(0xFFF9F9F9),
+                child: GestureDetector(
+                  onTap: () {
+                    _showPicker(context);
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      new IconButton(
+                        onPressed: () {
+                          _showPicker(context);
+                        },
+                        icon: new Icon(Icons.cloud_done_outlined),
+                      ),
+                      Text('Upload your photo here')
+                    ],
+                  ),
+                )),
+          ),
+          SizedBox(height: 25,),
+          _buildMoviesList(),
+          SizedBox(
+            height: 35,
+          ),
+          Center(
+            child: RaisedButton(
+              child: Text(
+                "Submit",
+                style: TextStyle(fontSize: 20),
+              ),
+              onPressed: () => {},
+              color: Colors.yellow[700],
+              textColor: Colors.white,
+              padding:
+                  EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 10),
+              splashColor: Colors.grey,
+            ),
+          )
+        ]));
+  }
+
+  //Time sheet card
+  Widget _timeSheetCard(BuildContext context, String name, String image) {
+    return Card(
+      semanticContainer: true,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: Stack(children: [
+        Image(image: AssetImage(image), fit: BoxFit.fill, height: 180),
+        Positioned(
+          left: 10,
+          bottom: 15,
+          width: 200,
+          child: Container(
+            height: 40,
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Row(
+                children: [
+                  Text(name),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TrenchingScreen()),
+                      );
+                    },
+                    child: new Icon(
+                      Icons.arrow_forward,
+                      color: Colors.yellow[700],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+      ]),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      elevation: 5,
+      margin: EdgeInsets.all(5),
+    );
+  }
+
+  Widget _buildMoviesList() {
+    return Container(
+      child: 
+           ListView.builder(
+             primary: false,
+   shrinkWrap: true,
+              itemCount: this.uploadImgesArr.length,
+              itemBuilder: (BuildContext context, int index) {
+                return UploadImageCard(movie: this.uploadImgesArr[index]);
+              },
+            )
+    
+    );
+  }
+}
+
+
+//Image Class
+
+class UploadImages {
+  final String title;
+  final String size;
+  final File imageUrl;
+  final String imageFile;
+  UploadImages({this.title, this.size, this.imageUrl,this.imageFile});
+}
+
+class UploadImageCard extends StatelessWidget {
+  final UploadImages movie;
+ 
+  UploadImageCard({this.movie});
+ 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+           ClipRRect(
+             
+     borderRadius: BorderRadius.circular(8.0),
+     child: Image.file(movie.imageUrl,fit: BoxFit.fill,width: 60,height: 60,),
+ ),
+          
+        SizedBox(width: 20,),
+        Expanded(
+                  child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(movie.title),
+                    SizedBox(height: 10,),
+                    Text(movie.size)
+                  ],
+                ),
+              ),
+              SizedBox(width: 10,),
+              CircleAvatar(
+            backgroundColor: Colors.yellow[100],
+            radius: 15,
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(Icons.close,size: 14,),
+              color: Colors.yellow[700],
+              onPressed: () {},
+            ),
+          )
+            ],
+          ),
+        ),
+        ],
+      ),
+      // child: ListTile(
+      //   contentPadding: EdgeInsets.zero,
+      //   leading: Container (
+      //     color: Colors.red,
+      //     width: 150,
+      //     height: 150,
+      //     child: Image.file(movie.imageUrl,fit: BoxFit.fill,),
+      //   ),
+      //   title: Text(movie.title),
+      //   subtitle: Text(movie.size),
+      // ),
     );
   }
 }
