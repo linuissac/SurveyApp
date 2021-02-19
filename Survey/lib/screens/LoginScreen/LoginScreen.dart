@@ -5,6 +5,7 @@ import 'package:Survey/redux/AppState.dart';
 import 'package:provider_for_redux/provider_for_redux.dart';
 import 'package:Survey/models/Login.dart';
 import 'package:Survey/components/TextField.dart';
+import 'package:Survey/screens/HomeScreen/HomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -54,142 +55,181 @@ class _LoginScreenState extends State<LoginScreen>
       mDispatch = dispatch;
 
       return Scaffold(
-        appBar: AppBar(
-          title: Text('Home',
-              style: TextStyle(
-                color: Colors.black,
-              )),
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          backgroundColor: Colors.white,
-        ),
-        backgroundColor: Colors.yellow[600],
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: height * 0.075,
-            ),
-            Container(
-                child: Column(
-              children: [
-                Container(
-                  width: 100,
-                  child: Container(
-                    child: AspectRatio(
-                        aspectRatio: 1 / 1,
-                        child: Image(
-                          image: AssetImage("assets/images/logo.png"),
-                          fit: BoxFit.fitWidth, // use this
-                        )),
+          backgroundColor: Colors.yellow[800],
+          body: Column(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: width,
+                    height: height * 0.35,
+                    decoration: BoxDecoration(color: Colors.yellow[800]),
                   ),
-                ),
-              ],
-            )),
-            SizedBox(
-              height: 50,
-            ),
-            Expanded(
-                child: Container(
-              width: width,
-              padding:
-                  EdgeInsets.only(top: 55, left: 20, right: 20, bottom: 20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.rectangle,
+                  Container(
+                    width: width * 0.2,
+                    height: height * 0.2,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/logo.png"))),
+                  ),
+                  Positioned(
+                    child: Image.asset("assets/images/login_upper_bg.png"),
+                    top: 0,
+                    left: -50,
+                  )
+                ],
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Form(
-                        key: _registerKey,
+              Container(
+                width: width,
+                height: height * 0.65,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.only(topRight: Radius.circular(100))),
+                child: Column(children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, top: height * 0.05),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: 30,
-                            ),
-                            AppTextFormField(
-                              labelText: 'Email',
-                              controller: emailField,
-                              cursorColor: Colors.white,
-                              onSaved: (value) => email = value,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            AppTextFormField(
-                              labelText: 'Password',
-                              controller: passField,
-                              cursorColor: Colors.white,
-                              obscureText: _obscurePassText,
-                              onSaved: (value) => password = value,
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassText
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.black,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscurePassText
-                                        ? _obscurePassText = false
-                                        : _obscurePassText = true;
-                                  });
-                                },
+                            Text("Welcome,",
+                                style: TextStyle(
+                                  color: Colors.yellow[800],
+                                  fontFamily: 'Proxima',
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.normal,
+                                )),
+                            Text(
+                              "Makehappen",
+                              style: TextStyle(
+                                color: Color(0xFFF7C037),
+                                fontFamily: 'Proxima',
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
                           ],
-                        )),
-
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        margin: EdgeInsets.only(top: 35),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
-                            color: Colors.black54),
-                        child: Center(
-                          child: new Icon(
-                            Icons.arrow_forward,
-                            color: Colors.yellow[700],
-                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(
-                          context,
-                        );
-                      },
-                      child: Text(
-                        'Forgot Password ?',
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Colors.black),
+                      Form(
+                          key: _registerKey,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20, right: 20),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                AppTextFormField(
+                                  labelText: 'Email',
+                                  controller: emailField,
+                                  cursorColor: Colors.white,
+                                  onSaved: (value) => email = value,
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                AppTextFormField(
+                                  labelText: 'Password',
+                                  controller: passField,
+                                  cursorColor: Colors.white,
+                                  obscureText: _obscurePassText,
+                                  onSaved: (value) => password = value,
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _obscurePassText
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.black,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscurePassText
+                                            ? _obscurePassText = false
+                                            : _obscurePassText = true;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                          )),
+                      // SizedBox(
+                      //   height: 25,
+                      // ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 12, top: 10),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(
+                                    context,
+                                  );
+                                },
+                                child: Text(
+                                  'Forgot Password ?',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ]),
+                      )
+                    ],
+                  ),
+                  Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Spacer(),
+                      Text(
+                        'Signin',
+                        style: TextStyle(color: Colors.yellow[700]),
                       ),
-                    )
-                    // OUR WIDGETS
-                  ],
-                ),
-              ),
-            ))
-          ],
-        ),
-      );
+                      SizedBox(
+                        width: 10,
+                      ),
+                      OnBoardingButton()
+                    ],
+                  ),
+                  SizedBox(
+                    height: height * 0.055,
+                  ),
+                ]),
+              )
+            ],
+          ));
     });
+  }
+}
+
+class OnBoardingButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return new GestureDetector(
+      onTap: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        ),
+      },
+      child: Container(
+          width: 85,
+          height: 85,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/icons/curve.png")))),
+    );
   }
 }

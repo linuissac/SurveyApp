@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:SurveyApp/screens/TrenchingGang/TrenchingGang.dart';
-import 'package:SurveyApp/screens/AdvancedCivilTeam/AdvancedCivil.dart';
-import 'package:SurveyApp/screens/ActivationCableTeam/ActivationCable.dart';
+import 'package:Survey/screens/TrenchingGang/TrenchingGang.dart';
+import 'package:Survey/screens/AdvancedCivilTeam/AdvancedCivil.dart';
+import 'package:Survey/screens/ActivationCableTeam/ActivationCable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
@@ -74,217 +74,13 @@ class HomeScreenState extends State<HomeScreen> {
       source: ImageSource.gallery,
     );
     String fileName = image.path.split('/').last;
-    // final size = ImageSizeGetter.getSize(FileInput(image));
-    setState(() {
-      this.uploadImgesArr.add(UploadImages(
-          title: fileName,
-          size: '12',
-          imageFile: image.toString(),
-          imageUrl: File(image.path)));
-    });
-    print(fileName);
-
-    String type = fileName.split('.').last;
-    print(type);
-  }
-
-  void _showPicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
-                      onTap: () {
-                        _imgFromGallery();
-                        Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Image.asset(
-            "assets/images/header_logo.png",
-          ),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: new Container(
-            // width: width * 0.85,
-            // height: 250,
-            padding: const EdgeInsets.all(15.0),
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "JOHN SMITH - MHG-SR-001",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Proxima',
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    new IconButton(
-                      icon: new Icon(Icons.calendar_today_outlined),
-                      onPressed: () => _selectDate(context),
-                      color: Colors.yellow[600],
-                    ),
-                    Text("${selectedDate.toLocal()}".split(' ')[0]),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                CupertinoSlidingSegmentedControl(
-                  groupValue: segmentedControlGroupValue,
-                  children: myTabs,
-                  onValueChanged: (i) {
-                    setState(() {
-                      segmentedControlGroupValue = i;
-                      timeSheet = !timeSheet;
-                    });
-                  },
-                  backgroundColor: Colors.grey[50],
-                  thumbColor: Colors.yellow[700],
-
-                  // padding: EdgeInsets.all(10),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                timeSheet ? _timeSheetWidget(context) : _defectstWidget(context)
-              ],
-            )),
-      ),
-    );
-  }
-
-//Time Sheet Widget
-
-  Widget _timeSheetWidget(BuildContext context) {
-    return Column(children: [
-      _timeSheetCard(context, "Trenching Gang", "assets/images/trenching.png"),
-      SizedBox(height: 20),
-      _timeSheetCard(context, "Advaced Civil Team", "assets/images/civil.png"),
-      SizedBox(height: 20),
-      _timeSheetCard(
-          context, "Activation/Cable Team", "assets/images/cable.png"),
-      SizedBox(height: 20),
-    ]);
-  }
-
-  //Defects
-
-  void _showAlert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("Alert"),
-              content: Text("Maximum limit reached"),
-            ));
-  }
-
-  Widget _defectstWidget(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    return Form(
-        key: _trenchingKey,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            height: 50,
-            decoration: BoxDecoration(
-              color: Color(0xFFF9F9F9),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            child: Padding(
-                padding: EdgeInsets.only(left: 12),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("Contract name / Number"),
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () => {},
-                      child: Container(
-                        width: 50,
-                        height: 70,
-                        decoration: BoxDecoration(
-                          color: Colors.black87,
-                          borderRadius: BorderRadius.circular(7),
                         ),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.yellow[600],
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
           ),
           SizedBox(
-            height: 25,
-          ),
-          Text("Description"),
-          SizedBox(
-            height: 14,
-          ),
-          Container(
-              height: 100,
               color: Color(0xFFF9F9F9),
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextField(
-                  maxLines: 6,
                   decoration: InputDecoration.collapsed(
-                    hintText: 'En',
-                    filled: true,
-                    fillColor: Color(0xFFF9F9F9),
-                    border: InputBorder.none,
                   ),
-                ),
-              )),
-          SizedBox(height: 25),
-          DottedBorder(
             color: Colors.grey[400],
-            dashPattern: [8, 4],
-            strokeWidth: 0.5,
-            child: Container(
-                height: 100,
                 width: width,
                 color: Color(0xFFF9F9F9),
                 child: GestureDetector(

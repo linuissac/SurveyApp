@@ -1,10 +1,10 @@
 import 'package:async_redux/async_redux.dart';
-import 'package:SurveyApp/redux/AppState.dart';
+import 'package:Survey/redux/AppState.dart';
 import 'package:provider_for_redux/provider_for_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:SurveyApp/components/CustomTextField.dart';
+import 'package:Survey/components/CustomTextField.dart';
 import 'package:signature/signature.dart';
 
 class Cable extends StatefulWidget {
